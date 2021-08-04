@@ -1,0 +1,9 @@
+#field{
+    position: relative;
+    background-color: rgba(48, 95, 48, 0.979);
+    border: 1px solid black;
+}
+
+body{
+    text-align: center;
+}
