@@ -1,5 +1,5 @@
 // 롤토체스 바닐라 자바스크립트 제작기
-// 우정잉님의 클립에 영감을 얻기 토이프로젝트오 시작
+// 우정잉님의 클립에 영감을 얻어 토이프로젝트 시작
 // 자바스크립트에 대한 공부와 꾸준한 개발을 위해 프로젝트에 임함
 // 꼼꼼하게 설계하지 않아 추후에 대규모의 리펙토링이 필요
 // 
@@ -7,6 +7,7 @@
 
 
 // 골드와 마나
+// Default Dataset
 var gold = 100;
 const mana = 100;
 
@@ -15,12 +16,12 @@ const mana = 100;
 // template :  { _name : '', _class : '', _species : '', ...}
 class Champion
 {
-	constructor(name, class_, species, price, rank, hp, atk, atk_speed)
+	constructor(name, chamClass, species, price, rank, hp, atk, atk_speed)
 	{
 		this.name = name;
 		this.price = price;
 		this.rank = rank;
-		this.class_ = class_;
+		this.chamClass = chamClass;
 		this.hp = hp;		
 		// this.mana-generation = m_g;
 		this.species = species;		
@@ -29,7 +30,7 @@ class Champion
 	}
 
 
-	cham_upgrade()
+	upgrade()
 	{
 		this.hp = this.hp*3;
 		this.atk = this.atk*3;
@@ -48,6 +49,7 @@ class Champion
 
 
 // 각 챔피언 객체 생성 
+// 이거는 어떻게 데이터화 시킬까?
 var Garen = new Champion('가렌', '기사', '귀족', 1, 'common', 1000, 5, 1);
 var Ahri = new Champion('아리', '메이지', '야생', 1, 'common', 700, 7, 1);
 var Kassadin = new Champion('카사딘', '메이지', '공허', 1, 'common', 1000, 5, 1);
@@ -63,35 +65,23 @@ var KhaZix = new Champion('카직스', '암살자', '공허', 1, 'common', 1000,
 
 arr_cham = [Garen, Ahri, Kassadin, Varus, Warwick, Darius, Nidalee, Fiora, RekSai, Vayne, Evelynn, KhaZix]
 
+const setBenchlist = () => {
+	document.querySelectorAll(".buy_cham").forEach(elem => {
+		let randomItem = getRandomItem(arr_cham);
+		elem.innerText = `${randomItem.name} \n ${randomItem.chamClass} \n ${randomItem.species}`
+	})
+}
 
 //리롤 버튼
-function reroll()
-{	
-	if (gold >= 2)
-	{
+const reroll = () => {	
+	if (gold >= 2){
 		gold -= 2;
-
-		var a = randomItem(arr_cham);
-		var b = randomItem(arr_cham);
-		var c = randomItem(arr_cham);
-		var d = randomItem(arr_cham);
-		var e = randomItem(arr_cham);		
-
-		// 아래 코드 반복문으로 새로 코딩 하기! for(var i in )
-		var doc0 = document.getElementsByClassName('buy_cham')[0].innerText = a.name + "\n" + a.class_ + "\n" + a.species;
-		var doc1 = document.getElementsByClassName('buy_cham')[1].innerText = b.name + "\n" + b.class_ + "\n" + b.species;
-		var doc2 = document.getElementsByClassName('buy_cham')[2].innerText = c.name + "\n" + c.class_ + "\n" + c.species;
-		var doc3 = document.getElementsByClassName('buy_cham')[3].innerText = d.name + "\n" + d.class_ + "\n" + d.species;
-		var doc4 = document.getElementsByClassName('buy_cham')[4].innerText = e.name + "\n" + e.class_ + "\n" + e.species;
-		// 여기에 나중에 각 챔피언의 속성까지 표기
-		//   + ' ' + randomItem(cham_list) + ' ' + randomItem(cham_list) + " " + randomItem(cham_list) + ' ' + randomItem(cham_list);
-
+		setBenchlist();
 	}
-	else
-	{
+	else {
 		alert("not enough gold!");
 	}
-	show_gold();
+	showGold();
 }
 
 
@@ -112,25 +102,22 @@ function Exp_Up()
 		alert("not enough gold!");
 	}
 
-	show_gold();
+	showGold();
 }
 
 // 골드 변화 표시
-function show_gold()
+function showGold()
 {
-	var Gold = document.getElementById('gold');
+	var Gold = document.querySelector("#gold");
 	Gold.innerText = gold
 	
 }
 
 //랜덤 챔피언 불러오기
-function randomItem(a)
-{
-	return a[Math.floor(Math.random() * a.length)];
-}
+const getRandomItem = (arry) => arry[Math.floor(Math.random() * arry.length)];
 
 // 챔피언 구매 및 버튼 삭제 액션
-function button_pressed(event)
+function purchaseChampion(event)
 {
 	//add_bench(event);	
 	var btp = event.currentTarget;
@@ -156,15 +143,15 @@ function button_pressed(event)
 			
 	btp.innerText = " ";
 	
-	show_gold();
-	Upgrade();
+	showGold();
+	upgradeChampion();
 	// var bench[] = document.getElementsByClassName("bench_list");  여기에 벤치리스트 생성 큐 생성
 }
 
 // 구매할 때 동시에 발생하기에 구매 함수에 넣어버림
 // 챔피언 3개 모일 시 업그레이드 액션
 // param으로 클래스 이름을 넣어볼까? 어디든 쓰일 수 있는 함수로 - 즉 순수함수?
-function Upgrade(){
+function upgradeChampion(){
 	var counts = {};
 	var TextArray = [];
 	var bench_chair = document.getElementsByClassName("bench_list");	
@@ -229,13 +216,12 @@ function call_of_the_duty(event){
 }
 
 // 시작시 초기화할 것들
-function when_load()
+function onLoad()
 {
 	var user = prompt("please tell your name here");
 	document.getElementById("welcome").innerText = user;
-	show_gold();
-	reroll();
-
+	showGold();
+	setBenchlist();
 	draw();
 	// show_Garen();
 }
@@ -257,7 +243,7 @@ const drop = (event) => {
 	event.target.appendChild(document.getElementById(data));
 
 	// 클래스이름을 다르게 해서 업그레이ㄷ,?
-	Upgrade();
+	upgradeChampion();
 }
 
 

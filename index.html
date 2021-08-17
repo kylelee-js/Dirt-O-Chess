@@ -10,93 +10,86 @@
     
     
 </head>
-<body onload="when_load()">
+<body onload="onLoad()">
 
-<span>
-  <h1 id="start">Welcome to Dirt'o'chess!</h1>
-  <h1 id="welcome"></h1>
-</span>
+  <div class="WelcomeMet">
+    <span>
+      <h1 id="start">Welcome to Dirt'o'chess!</h1>
+      <h1 id="welcome"></h1>
+    </span>
+  
+    <p>Thanks to 'FriendshipIng' that she gave me an inspiration of this project</p>
+  </div>
+  
+  <!-- 2 button to reroll and EXp up -->
+  <div>
+    <button onclick="reroll()">REROLL</button>
+    <button onclick="Exp_Up()">EXP UP</button>
+  </div>
 
-
-<p>Thanks to my muse 'FriendshipIng' that she gave me an inspiration of this project</p>
-
-
-<!-- 2 button to reroll and EXp up -->
-<div>
-  <button onclick="reroll()">REROLL</button>
-  <button onclick="Exp_Up()">EXP UP</button>
-</div>
-
-<!-- Garen HP -->
-<p>
-  <div id="asdasd"></div>
-</p>
-
-<!-- show EXP -->
-<p>
-  <span>EXP : </span>
-  <span, id="Exp_Num">0</span>
-</p>
-
-<!-- show Gold -->
-<p>
-  <span>Gold : </span>
-  <span id="gold"></span>
-</p>
-
-<div class="battlefield" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <!-- Garen HP -->
   <p>
-    여기에 드래그 드롭을 해주시오
+    <div id="asdasd"></div>
   </p>
-  
-  <!-- <button id="ddd"></button>
-  <button id="aaa"></button>
-  <button id="ccc"></button>
-  <button id="eee"></button> -->
-</div>  
 
-<!-- 왜 캔버스에 버튼들이 표시되지 않는 건가??? -->
-<!-- <div ondrop="drop(event)" ondragover="allowDrop(event)"> -->
-<div>
-  <img id="asdasdd" src="asdasd.jpg" alt="asdasd.jpg" hidden>
-  <!-- 캔버스와 필드 생성 -->
-  <canvas id="field" height="500", width="1000" >
-  
-  
-  </canvas>
-</div>
+  <!-- show EXP -->
+  <p>
+    <span>EXP : </span>
+    <span id="Exp_Num">0</span>
+  </p>
 
-<!-- 벤치 리스트 -->
-<!-- 역으로 드래그 되지 않기 위해 -->
-<!-- <p ondrop="drop(event)" ondragover="allowDrop(event)"> -->
-<p>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="01">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="02">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="03">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="04">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)">  </button>
-  <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)">  </button>
+  <!-- show Gold -->
+  <p>
+    <span>Gold : </span>
+    <span id="gold"></span>
+  </p>
 
-</p>
+  <div class="battlefield" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <p>
+      Canvas for Drag-Drop
+    </p>
+  </div>  
 
-<!-- 새로운 챔프 구매 리스트 --> 
-<p>
-  <button class="buy_cham", onclick="button_pressed(event)">챔피언</button>
-  <button class="buy_cham", onclick="button_pressed(event)">챔피언</button>
-  <button class="buy_cham", onclick="button_pressed(event)">챔피언</button>
-  <button class="buy_cham", onclick="button_pressed(event)">챔피언</button>
-  <button class="buy_cham", onclick="button_pressed(event)">챔피언</button>
-</p>
+  <!-- 왜 캔버스에 버튼들이 표시되지 않는 건가??? -->
+  <!-- <div ondrop="drop(event)" ondragover="allowDrop(event)"> -->
+  <div>
+    <img id="asdasdd" src="" alt="asdasd.jpg" hidden>
+    <!-- 캔버스와 필드 생성 -->
+    <!-- 아니 캔버스 위로 올려두면 사라져 버리네;; -->
+    <canvas id="field" height="500", width="1000" ondrop="drop(event)" ondragover="allowDrop(event)">
+    
+    <divondrop="drop(event)" ondragover="allowDrop(event)">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem maxime assumenda accusamus blanditiis? Assumenda minus fuga eaque, molestias recusandae laudantium odio earum praesentium voluptate reprehenderit laborum temporibus voluptatibus. Consequuntur, velit?</div>
+    </canvas>
+  </div>
+
+  <!-- 벤치 리스트 -->
+  <!-- 역으로 드래그 되지 않기 위해 -->
+  <!-- <p ondrop="drop(event)" ondragover="allowDrop(event)"> -->
+  <p>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="01">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="02">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="03">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="04">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="05">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="06">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="07">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="08">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="09">  </button>
+    <button class="bench_list" onclick="call_of_the_duty()" draggable="true" ondragstart="drag(event)" id="10">  </button>
+
+  </p>
+
+  <!-- 새로운 챔프 구매 리스트 --> 
+  <p>
+    <button class="buy_cham", onclick="purchaseChampion(event)">챔피언</button>
+    <button class="buy_cham", onclick="purchaseChampion(event)">챔피언</button>
+    <button class="buy_cham", onclick="purchaseChampion(event)">챔피언</button>
+    <button class="buy_cham", onclick="purchaseChampion(event)">챔피언</button>
+    <button class="buy_cham", onclick="purchaseChampion(event)">챔피언</button>
+  </p>
 
 
-<script src="script.js"></script>  
-<!-- <script type="text/javascript" src="bootstrap-3.3.2-dist/js/bootstrap.js"></script> -->
-<!-- 부트스트랩의 자바스크립트는 무적권 제이쿼리가 있어야 작동함, 제이쿼리 사용법 익히기 -->
-
+  <script src="script.js"></script>  
 
 </body>
 </html>
