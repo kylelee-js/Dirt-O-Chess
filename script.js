@@ -65,10 +65,24 @@ var KhaZix = new Champion('카직스', '암살자', '공허', 1, 'common', 1000,
 
 arr_cham = [Garen, Ahri, Kassadin, Varus, Warwick, Darius, Nidalee, Fiora, RekSai, Vayne, Evelynn, KhaZix]
 
+
+const createBench = () => {
+	const bench = document.querySelector("#Bench");
+
+	for (let i = 0; i < 5; i++) {
+		let doc = document.createElement("button");
+		doc.className = "Bench";
+		doc.innerText = "챔피온";
+		bench.appendChild(doc);
+	}
+}
+
+
 const setBenchlist = () => {
-	document.querySelectorAll(".buy_cham").forEach(elem => {
+	document.querySelectorAll(".Bench").forEach(elem => {
 		let randomItem = getRandomItem(arr_cham);
-		elem.innerText = `${randomItem.name} \n ${randomItem.chamClass} \n ${randomItem.species}`
+		elem.innerText = `${randomItem.name} \n ${randomItem.chamClass} \n ${randomItem.species}`;
+		elem.addEventListener("click", purchaseChampion);
 	})
 }
 
@@ -156,8 +170,7 @@ function upgradeChampion(){
 	var TextArray = [];
 	var bench_chair = document.getElementsByClassName("bench_list");	
 
-	for (var i = 0; i < bench_chair.length; i++)
-	{
+	for (var i = 0; i < bench_chair.length; i++){
 		TextArray[i] = bench_chair[i].innerText;		
 	}
 
@@ -165,45 +178,36 @@ function upgradeChampion(){
 	TextArray.forEach(function(x){ counts[x] = (counts[x] || 0) + 1; });
 	console.log(counts);
 	var asd = Object.keys(counts);
-	var isthree = function (value)
-	{
-		if(value == "")
-		{
+	var isthree = function (value){
+		if(value == ""){
 			return false;
 		}
 		return counts[value] == 3;
 	}
 
 	// 합성 부분
-	if (asd.some(isthree))
-	{
+	if (asd.some(isthree)){
 		var ddd = [];
 		asd.forEach(function(x){ if(counts[x] == 3){ ddd.push(x); } });
 		console.log(ddd[0]);
 		
-		for(var o = 0; bench_chair.length; o++)
-		{
-			if( bench_chair[o].innerText == ddd[0] )
-			{
+		for(var o = 0; bench_chair.length; o++){
+			if( bench_chair[o].innerText == ddd[0] ){
 				bench_chair[o].innerText = ddd[0] + "\n" +"Upgraded";
 				break;
 			}
 		}
 		setTimeout( function(){
-			for(var x = 0; bench_chair.length; x++)
-			{
-				if (bench_chair[x].innerText == ddd[0])
-				{
-					
+			for(var x = 0; bench_chair.length; x++){
+				if (bench_chair[x].innerText == ddd[0]){	
 					bench_chair[x].innerText = "";
-					
 				}
 			}
 		}			
-		, 500);
+		, 100);
 		// 적절한 밀리세컨드 설정으로 자연스럽게
 		
-		console.log("oh yeag!");
+		console.log("oh yeah!");
 	}
 }
 
@@ -221,6 +225,7 @@ function onLoad()
 	var user = prompt("please tell your name here");
 	document.getElementById("welcome").innerText = user;
 	showGold();
+	createBench();
 	setBenchlist();
 	draw();
 	// show_Garen();
