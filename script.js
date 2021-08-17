@@ -16,7 +16,7 @@ const mana = 100;
 // template :  { _name : '', _class : '', _species : '', ...}
 class Champion
 {
-	constructor(name, chamClass, species, price, rank, hp, atk, atk_speed)
+	constructor(name, chamClass, species, price = 3, rank = "common", hp, atk, atk_speed)
 	{
 		this.name = name;
 		this.price = price;
@@ -29,20 +29,16 @@ class Champion
 		this.atk_speed = atk_speed; 
 	}
 
-
-	upgrade()
-	{
+	upgrade(){
 		this.hp = this.hp*3;
 		this.atk = this.atk*3;
 	}
 
-	get upgrade_resell()
-	{
+	get upgrade_resell(){
 		return this.price*2.5;
 	}
 
-	set upgraded_price(price)
-	{
+	set upgraded_price(price){
 		this.price = price*2.5;
 	}
 }
@@ -68,19 +64,30 @@ arr_cham = [Garen, Ahri, Kassadin, Varus, Warwick, Darius, Nidalee, Fiora, RekSa
 
 const createBench = () => {
 	const bench = document.querySelector("#Bench");
-
 	for (let i = 0; i < 5; i++) {
-		let doc = document.createElement("button");
-		doc.className = "Bench";
-		doc.innerText = "챔피온";
-		bench.appendChild(doc);
+		let btn = document.createElement("button");
+		btn.className = "Bench";
+		btn.innerText = "챔피온";
+		bench.appendChild(btn);
 	}
 }
 
+const createChamQueue = () => {
+	const queue = document.querySelector("#ChamQueue");
+	for (let i = 0; i < 10; i++) {
+		let btn = document.createElement("button");
+		btn.className = "ChamQueue";
+		btn.innerText = "";
+		btn.draggable="true";
+		btn.addEventListener("dragstart", drag)
+		queue.appendChild(btn);
+	}
+}
 
 const setBenchlist = () => {
 	document.querySelectorAll(".Bench").forEach(elem => {
 		let randomItem = getRandomItem(arr_cham);
+		elem.price = randomItem.price;
 		elem.innerText = `${randomItem.name} \n ${randomItem.chamClass} \n ${randomItem.species}`;
 		elem.addEventListener("click", purchaseChampion);
 	})
@@ -100,58 +107,47 @@ const reroll = () => {
 
 
 //경험치 구매
-function Exp_Up()
-{	
-	if (gold >= 4)
-	{
+const expUp = () => {	
+	if (gold >= 4){
 		gold -= 4;
 		console.log("clicked!");
-  		var EXP = document.getElementById('Exp_Num');
-		var exp_num = parseInt(EXP.innerText) + 4;
+  		let EXP = document.getElementById('Exp_Num');
+		let exp_num = parseInt(EXP.innerText) + 4;
 		console.log(exp_num);
  		EXP.innerText = String(exp_num);
 	}
-	else
-	{
+	else{
 		alert("not enough gold!");
 	}
-
 	showGold();
 }
 
 // 골드 변화 표시
-function showGold()
-{
-	var Gold = document.querySelector("#gold");
-	Gold.innerText = gold
-	
+const showGold = () => {
+	let Gold = document.querySelector("#gold");
+	Gold.innerText = gold;
 }
 
 //랜덤 챔피언 불러오기
 const getRandomItem = (arry) => arry[Math.floor(Math.random() * arry.length)];
 
 // 챔피언 구매 및 버튼 삭제 액션
-function purchaseChampion(event)
-{
+const purchaseChampion = (event) => {
 	//add_bench(event);	
-	var btp = event.currentTarget;
-	gold -= 4;  //여기에 각 챔피언의 가격
+	let btp = event.currentTarget;
+	gold -= btp.price;  //여기에 각 챔피언의 가격
 	
-	var bench_chair = document.getElementsByClassName("bench_list");
+	let chamQueue = document.getElementsByClassName("ChamQueue");
 	
-	if(bench_chair[9].innerText != "")
-	{
+	if(chamQueue[9].innerText != ""){
 		alert("not enough bench space!");
 		return false;
 	}
-	for(var i = 0; i < bench_chair.length; i++)
-	{		
-		if(bench_chair[i].innerText == "")
-		{
-			bench_chair[i].innerText = btp.innerText;
-			
+	for(let i = 0; i < chamQueue.length; i++){		
+		if(chamQueue[i].innerText == ""){
+			chamQueue[i].innerText = btp.innerText;
 			break;
-			console.log("asd");
+			console.log("break");
 		}		
 	}
 			
@@ -159,26 +155,25 @@ function purchaseChampion(event)
 	
 	showGold();
 	upgradeChampion();
-	// var bench[] = document.getElementsByClassName("bench_list");  여기에 벤치리스트 생성 큐 생성
 }
 
 // 구매할 때 동시에 발생하기에 구매 함수에 넣어버림
 // 챔피언 3개 모일 시 업그레이드 액션
 // param으로 클래스 이름을 넣어볼까? 어디든 쓰일 수 있는 함수로 - 즉 순수함수?
-function upgradeChampion(){
-	var counts = {};
-	var TextArray = [];
-	var bench_chair = document.getElementsByClassName("bench_list");	
+const upgradeChampion = () => {
+	let counts = {};
+	let TextArray = [];
+	let chamQueue = document.getElementsByClassName("ChamQueue");	
 
-	for (var i = 0; i < bench_chair.length; i++){
-		TextArray[i] = bench_chair[i].innerText;		
+	for (let i = 0; i < chamQueue.length; i++){
+		TextArray[i] = chamQueue[i].innerText;		
 	}
 
 	// count 구문
 	TextArray.forEach(function(x){ counts[x] = (counts[x] || 0) + 1; });
 	console.log(counts);
-	var asd = Object.keys(counts);
-	var isthree = function (value){
+	let asd = Object.keys(counts);
+	let isthree = function (value){
 		if(value == ""){
 			return false;
 		}
@@ -187,45 +182,43 @@ function upgradeChampion(){
 
 	// 합성 부분
 	if (asd.some(isthree)){
-		var ddd = [];
+		let ddd = [];
 		asd.forEach(function(x){ if(counts[x] == 3){ ddd.push(x); } });
 		console.log(ddd[0]);
 		
-		for(var o = 0; bench_chair.length; o++){
-			if( bench_chair[o].innerText == ddd[0] ){
-				bench_chair[o].innerText = ddd[0] + "\n" +"Upgraded";
+		for(let o = 0; chamQueue.length; o++){
+			if( chamQueue[o].innerText == ddd[0] ){
+				chamQueue[o].innerText = ddd[0] + "\n" +"Upgraded";
 				break;
 			}
 		}
 		setTimeout( function(){
-			for(var x = 0; bench_chair.length; x++){
-				if (bench_chair[x].innerText == ddd[0]){	
-					bench_chair[x].innerText = "";
+			for(let x = 0; chamQueue.length; x++){
+				if (chamQueue[x].innerText == ddd[0]){	
+					chamQueue[x].innerText = "";
 				}
 			}
 		}			
 		, 100);
 		// 적절한 밀리세컨드 설정으로 자연스럽게
-		
 		console.log("oh yeah!");
 	}
 }
 
-// 전장으로 내보내는 함수
-function call_of_the_duty(event){
-
+// On Working
+// 전장으로 내보내는 함수 
+const call_of_the_duty = (event) => {
 	// 해당 이벤트는 드래그 앤 드롭으로도 구현이 가능해야함
-	var asdasd = event.currentTarget;
-	
+	let asdasd = event.currentTarget;
 }
 
 // 시작시 초기화할 것들
-function onLoad()
-{
-	var user = prompt("please tell your name here");
+const onLoad = () => {
+	let user = prompt("please tell your name here");
 	document.getElementById("welcome").innerText = user;
 	showGold();
 	createBench();
+	createChamQueue();
 	setBenchlist();
 	draw();
 	// show_Garen();
@@ -253,13 +246,13 @@ const drop = (event) => {
 
 
 
+// 여기는 아예 새로 작성하기
 // 화면에 그림 생성
 var cvs = document.querySelector('canvas');
-// var canvas = document.getElementById("field");
-function draw()
-{
-	var ctx = cvs.getContext("2d");
-	var fire = document.getElementById("asdasdd");
+// let canvas = document.getElementById("field");
+const draw = () => {
+	let ctx = cvs.getContext("2d");
+	let fire = document.getElementById("asdasdd");
 	ctx.drawImage(fire, 10, 10);
 	// ctx.fillRect(100, 100, 100, 100);
 }
