@@ -46,6 +46,7 @@ class Champion
 
 // 각 챔피언 객체 생성 
 // 이거는 어떻게 데이터화 시킬까?
+// Firebase로 연동하기
 var Garen = new Champion('가렌', '기사', '귀족', 1, 'common', 1000, 5, 1);
 var Ahri = new Champion('아리', '메이지', '야생', 1, 'common', 700, 7, 1);
 var Kassadin = new Champion('카사딘', '메이지', '공허', 1, 'common', 1000, 5, 1);
@@ -79,7 +80,7 @@ const createChamQueue = () => {
 		btn.className = "ChamQueue";
 		btn.innerText = "";
 		btn.draggable="true";
-		btn.addEventListener("dragstart", drag)
+		btn.addEventListener("dragstart", drag);
 		queue.appendChild(btn);
 	}
 }
